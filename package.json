@@ -1,0 +1,22 @@
+{
+  "name": "wordguess-cli",
+  "version": "1.0.0",
+  "description": "This is a coding bootcamp assignment where I have been instructed to create a Word Guess command-line game using constructor functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctashton/wordguess-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ctashton/wordguess-cli/issues"
+  },
+  "homepage": "https://github.com/ctashton/wordguess-cli#readme",
+  "dependencies": {
+    "inquirer": "^6.3.1"
+  }
+}
