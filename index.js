@@ -5,7 +5,8 @@ var words = ["javascript", "python", "sql", "css", "html,", "jquery", "ruby", "r
 var guessingWord = "";
 var answerWord = "";
 var guessesLeft = 7;
-function confirm(){
+
+function confirm() {
     inquirer.prompt([
         {
             type: "confirm",
@@ -19,61 +20,96 @@ function confirm(){
         } else {
             restartGame();
         }
-});
+    });
 };
-function restartGame(){
-    if (words.length<2) {
-        words = ["javascript", "python", "sql", "css", "html", "jquery", "ruby", "react", "node", "firebase"];
-    };
-    var randomWord = Math.floor(Math.random()*words.length);
-    console.log("random word: " + randomWord)
+
+function restartGame() {
+
+    words = ["javascript", "python", "sql", "css", "html", "jquery", "ruby", "react", "node", "firebase"];
+
+    var randomWord = Math.floor(Math.random() * words.length);
+    // console.log("random word: " + randomWord)
     answerWord = words[randomWord]
-    console.log("answer word: " + answerWord)
+    // console.log("answer word: " + answerWord)
     guessingWord = new Word(answerWord);
-    console.log("guessing word: " + 
-    guessingWord.gameWord)
-    console.log("GWORD New Letters: " + guessingWord.newLetters)
+    // console.log("guessing word: " + guessingWord.gameWord)
+    // console.log("GWORD New Letters: " + guessingWord.newLetters)
     guessingWord.blankAnswer();
     console.log(guessingWord.newLetters)
-    
+
     playGame();
 }
 
-function playGame(){
+function isTrue(el, index, arr) {
+  if (index === 0) {
+      return true;
+  } else {
+      return (el.guessed === arr[index-1].guessed)
+  }
+}
+function winCheck() {
+
+    var youWin = guessingWord.newLetters.every(isTrue)
+    if (!youWin) {
+        playGame()
+    }
+    else{
+        console.log("You Win!")
+        inquirer.prompt([
+            {
+                type: "confirm",
+                name: "winner",
+                message: "You WIN!!! Would you like to play again?"
+            }
+        ]).then(function(input) {
+            if (!input.winner) {
+                console.log("Maybe next time.")
+                return;
+            } else{
+                restartGame();
+            }
+        }
+
+        )
+    }
+    
+}
+
+function playGame() {
     if (guessesLeft > 0) {
-        console.log("function play game guessingWord: " + guessingWord.letterCheck());
         inquirer.prompt([
             {
                 type: "message",
                 name: "guess",
-                message: "Input a letter to make a guess.  Guess all of the correct letters to win!"
+                message: "Input a letter to make a guess.  Guess all of the correct letters to win!\n\nThe current word is " + guessingWord.letterCheck()
             }
-        ]).then( function checkGuess(data) {
-            if ((data.guess.length === 1)){
-                console.log(data.guess + "valid uguess in checkGuess()")
-                if(guessingWord.gameWord.includes(data.guess)){
-                    for (let i = 0; i < guessingWord.newLetters.length; i++) {
-                        guessingWord.newLetters[i].guessCheck(data.guess)
-                    }
-                }else{
+        ]).then(function checkGuess(data) {
+            if ((data.guess.length === 1)) {
+                if (guessingWord.gameWord.includes(data.guess)) {
+                    for (let i = 0; i < guessingWord.newLetters.length; i++)
+                        if (guessingWord.newLetters[i].char === data.guess.toUpperCase()) {
+                            guessingWord.newLetters[i].guessCheck(data.guess)
+                        }
+                    // console.log(guessingWord)
+                } else {
                     guessesLeft--
-                    console.log(guessesLeft)
+                    console.log(guessesLeft + " guesses left.")
                 }
-
+                winCheck(guessingWord);
+            } else {
+                console.log(data.guess + "You have too many characters!")
+                console.log(guessesLeft)
                 playGame();
-            } else { console.log (data.guess + "invalid uguess in checkguess()")
-            console.log(guessesLeft)
-            playGame();
-        }
+            }
 
         }
         )
 
     }
-    else{
+    else {
         console.log("Game over::")
     }
-    };
+};
 
 
 

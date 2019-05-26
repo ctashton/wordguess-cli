@@ -17,7 +17,7 @@ var Word = function(gameWord) {
         } 
     }
     this.letterCheck = function() {
-        var newString = '_'
+        var newString = ''
         for (var i = 0; i < this.newLetters.length; i++){
             newString += this.newLetters[i].hidden();
         };
