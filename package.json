@@ -18,5 +18,6 @@
   "homepage": "https://github.com/ctashton/wordguess-cli#readme",
   "dependencies": {
     "inquirer": "^6.3.1"
-  }
+  },
+  "keywords": []
 }

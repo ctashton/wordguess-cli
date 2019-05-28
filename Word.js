@@ -5,7 +5,7 @@ var Word = function(gameWord) {
     this.newLetters = [];
     this.blankAnswer = function (){
         var wordArray = this.gameWord.split("")
-        console.log("Word Array : " + wordArray)
+        // console.log("Word Array : " + wordArray)
         for (i = 0; i < wordArray.length; i++){
            var blank = new Letter(wordArray[i])
            this.newLetters.push(blank);

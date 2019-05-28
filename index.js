@@ -35,7 +35,6 @@ function restartGame() {
     // console.log("guessing word: " + guessingWord.gameWord)
     // console.log("GWORD New Letters: " + guessingWord.newLetters)
     guessingWord.blankAnswer();
-    console.log(guessingWord.newLetters)
 
     playGame();
 }
@@ -59,7 +58,7 @@ function winCheck() {
             {
                 type: "confirm",
                 name: "winner",
-                message: "You WIN!!! Would you like to play again?"
+                message: "You WIN!!! The word was " + guessingWord.gameWord + ". Would you like to play again?"
             }
         ]).then(function(input) {
             if (!input.winner) {
@@ -90,12 +89,16 @@ function playGame() {
                         if (guessingWord.newLetters[i].char === data.guess.toUpperCase()) {
                             guessingWord.newLetters[i].guessCheck(data.guess)
                         }
+                        winCheck(guessingWord);
+
                     // console.log(guessingWord)
                 } else {
                     guessesLeft--
                     console.log(guessesLeft + " guesses left.")
+                    playGame()
                 }
-                winCheck(guessingWord);
+
+                
             } else {
                 console.log(data.guess + "You have too many characters!")
                 console.log(guessesLeft)
